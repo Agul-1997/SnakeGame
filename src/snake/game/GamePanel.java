@@ -40,6 +40,21 @@ public class GamePanel extends JPanel implements ActionListener {
         timer.start();
     }
     
+    public void welcome(Graphics g){
+        if(!running && !gameOn){
+            gameOver(g);
+        }
+        else{
+            g.setColor(Color.red);
+            g.setFont(new Font("TimesRoman", Font.BOLD, 75));
+            FontMetrics metrics1 = getFontMetrics(g.getFont());
+            g.drawString("SNAKE", (SCREEN_WIDTH - metrics1.stringWidth("SNAKE")) / 2, SCREEN_HEIGHT / 2);
+            g.setFont(new Font("TimesRoman", Font.ITALIC, 40));
+            FontMetrics metrics2 = getFontMetrics(g.getFont());
+            g.drawString("Press space to start the game", (SCREEN_WIDTH - metrics2.stringWidth("Press space to start the game")) / 2, SCREEN_HEIGHT);
+        }
+    }
+    
     public void pause(){
         gameOn = false;
         timer.stop();
@@ -63,7 +78,12 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        draw(g);
+        if(!gameOn){
+            welcome(g);
+        }
+        else{
+            draw(g);
+        }
     }
     
     public void draw(Graphics g){
@@ -81,7 +101,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 }
             }
             g.setColor(Color.red);
-            g.setFont(new Font("Ink Free", Font.BOLD, 40));
+            g.setFont(new Font("TimesRoman", Font.ITALIC, 40));
             FontMetrics metrics = getFontMetrics(g.getFont());
             g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics.stringWidth("Score: " + applesEaten)) / 2, g.getFont().getSize());
         }
@@ -159,17 +179,21 @@ public class GamePanel extends JPanel implements ActionListener {
     public void gameOver(Graphics g){
         // score card
         g.setColor(Color.red);
-        g.setFont(new Font("Ink Free", Font.BOLD, 40));
+        g.setFont(new Font("TimesRoman", Font.ITALIC, 40));
         FontMetrics metrics2 = getFontMetrics(g.getFont());
         g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics2.stringWidth("Score: " + applesEaten)) / 2, g.getFont().getSize());
         // game over
-        g.setFont(new Font("Ink Free", Font.BOLD, 75));
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 75));
         FontMetrics metrics1 = getFontMetrics(g.getFont());
         g.drawString("Game Over", (SCREEN_WIDTH - metrics1.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2);
+        // press space
+        g.setFont(new Font("TimesRoman", Font.ITALIC, 40));
+        FontMetrics metrics3 = getFontMetrics(g.getFont());
+        g.drawString("Press space 2 times", (SCREEN_WIDTH - metrics3.stringWidth("Press space 2 times")) / 2, SCREEN_HEIGHT);
     }
 
     @Override
-    public void actionPerformed(ActionEvent ae) {
+    public void actionPerformed(ActionEvent ae){
         if(running && gameOn){
             move();
             checkApple();
