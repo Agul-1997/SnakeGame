@@ -51,7 +51,7 @@ public class GamePanel extends JPanel implements ActionListener {
             g.drawString("SNAKE", (SCREEN_WIDTH - metrics1.stringWidth("SNAKE")) / 2, SCREEN_HEIGHT / 2);
             g.setFont(new Font("TimesRoman", Font.ITALIC, 40));
             FontMetrics metrics2 = getFontMetrics(g.getFont());
-            g.drawString("Press space to start the game", (SCREEN_WIDTH - metrics2.stringWidth("Press space to start the game")) / 2, SCREEN_HEIGHT);
+            g.drawString("Press space", (SCREEN_WIDTH - metrics2.stringWidth("Press space")) / 2, SCREEN_HEIGHT);
         }
     }
     
@@ -149,31 +149,27 @@ public class GamePanel extends JPanel implements ActionListener {
         for(int i = bodyParts; i > 0; i--){
             if(x[0] == x[i] && y[0] == y[i]){
                 running = false;
-                gameOn = false;
             }
         }
         // if head touches left border
         if(x[0] < 0){
             running = false;
-            gameOn = false;
         }
         // if head touches right border
         if(x[0] > SCREEN_WIDTH){
             running = false;
-            gameOn = false;
         }
         // if head touches top border
         if(y[0] < 0){
             running = false;
-            gameOn = false;
         }
         // if head touches bottom border
         if(y[0] > SCREEN_WIDTH){
             running = false;
-            gameOn = false;
         }
-        if(!running)
+        if(!running){
             timer.stop();
+        }
     }
     
     public void gameOver(Graphics g){
